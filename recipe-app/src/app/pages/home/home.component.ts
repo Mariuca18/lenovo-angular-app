@@ -12,8 +12,27 @@ import { RecipesService } from '../../services/recipes.service';
 })
 export class HomeComponent {
 recipes: Recipe[] = [];
+dummyRecipes!: Recipe[];
+errorMessage ='';
+
 constructor(recipesService:RecipesService){
 this.recipes = recipesService.recipes;
+try{
+recipesService.getAllRecipes().subscribe({
+  next:(response) =>{
+    console.log(Response);
+    //throw new Error('something happened');
+    this.dummyRecipes=response.recipes;
+  },
+  error: (err)=>{
+    console.log(err)
+    this.errorMessage = err.message;
+  },
+});
+}catch (error:any ){
+  this.errorMessage= error;
+}
+}
+}
 
-}
-}
+
