@@ -1,7 +1,13 @@
 <h1>Delicious Recipes</h1>
 
 <h2>Recipes</h2>
-
+<div class="search-container">
+    <input type = "text" placeholder="Search recipe"[(ngModel)]="searchValue" (ngModelChange)="filterValue()" />
+   
+   <button class="add-button" (click)="redirectToAddRecipe()"> Add Recipe </button>"
+   
+</div>
+{{searchValue}}
 <div class ="card-container">
 <!--app-recipe-card [recipe]="recipes[0]"></app-recipe-card>
 <app-recipe-card [recipe]="recipes[1]"></app-recipe-card>
@@ -9,7 +15,7 @@
 
 
 
-@for(recipe of dummyRecipes;track $index){
+@for(recipe of filteredRecipes;track $index){
     <app-recipe-card [recipe]="recipe"></app-recipe-card>
     
 }
