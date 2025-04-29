@@ -4,6 +4,7 @@ import { Recipe } from '../../interfaces/recipe.interface';
 import { RecipesService } from '../../services/recipes.service';
 import { FormsModule } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { db } from '../../db/db';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class HomeComponent {
 recipes: Recipe[] = [];
 dummyRecipes!: Recipe[];
 filteredRecipes!:Recipe[];
+dbRecipes!:any[];
 errorMessage :any='';
 searchValue='';
 constructor(recipesService:RecipesService,readonly router :Router){
@@ -36,13 +38,23 @@ recipesService.getAllRecipes().subscribe({
 }catch (error:any ){
   this.errorMessage= error;
 }
+db.subscribeQuery({recipes:{}},(resp)=>{
+if(resp.error){
+  this.errorMessage=resp.error;
+}
+if(resp.data){
+  this.dbRecipes=resp.data.recipes; console.log(this.dbRecipes)
+}
+});
+
+
 }
 redirectToAddRecipe(){
   this.router.navigateByUrl('add-recipe');
 }
 filterValue(){
   this.filteredRecipes=this.dummyRecipes.filter((recipe)=>
-  recipe.name.toUpperCase().includes(this.searchValue.toUpperCase()))
+  recipe.name.toUpperCase().includes(this.searchValue.toUpperCase()));
 }
 }
 
