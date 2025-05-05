@@ -1,5 +1,5 @@
-<div class="card-container"[ngStyle]="{backgroundColor:recipe.prepTimeMinutes >=20? 'red' : 'green',}"
-[ngClass]="{colorWhite:recipe.difficulty==='Easy'}">
+<div class="card-container" [ngClass]="recipe.prepTimeMinutes >=20 ? 'dark-border': 'light-border'">
+   
 <div>{{ recipe.name | uppercase }}</div>   
 <img [src]="recipe.image" alt = "recipe-image" />
 <div><b>Preparation Time: </b>{{ recipe.prepTimeMinutes }}</div>
